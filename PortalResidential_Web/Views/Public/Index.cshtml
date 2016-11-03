@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/PublicLayout.cshtml";
+}
+
+<h2>Index</h2>
+<p>Informacion sobre la pagina...</p>
+
+    <button class="btn btn-default" onclick="location.href='@Url.Action("LogIn","Public")'">
+        Inicia Sesión
+    </button>
+    
+    <button class="btn btn-default" onclick="location.href='@Url.Action("Register", "Public")'">
+        Regístrate
+    </button>

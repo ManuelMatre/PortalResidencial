@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ResidentialModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="appusers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_address" Type="uint" />
+    <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="apellido" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="contrasena" Type="varchar" MaxLength="50" />
+    <Property Name="reg_date" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="defaultaddress">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="isavailable" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_appusers_defaultaddress">
+    <End Role="defaultaddress" Type="Self.defaultaddress" Multiplicity="0..1" />
+    <End Role="appusers" Type="Self.appusers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="defaultaddress">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="appusers">
+        <PropertyRef Name="id_address" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ResidentialModelStoreContainer">
+    <EntitySet Name="appusers" EntityType="Self.appusers" Schema="residencial_galos" store:Type="Tables" />
+    <EntitySet Name="defaultaddress" EntityType="Self.defaultaddress" Schema="residencial_galos" store:Type="Tables" />
+    <AssociationSet Name="FK_appusers_defaultaddress" Association="Self.FK_appusers_defaultaddress">
+      <End Role="defaultaddress" EntitySet="defaultaddress" />
+      <End Role="appusers" EntitySet="appusers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

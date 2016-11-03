@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ResidentialModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="defaultaddress">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="address" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="isavailable" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="appusers" Relationship="ResidentialModel.FK_appusers_defaultaddress" FromRole="defaultaddress" ToRole="appusers" />
+  </EntityType>
+  <EntityContainer Name="ResidentialEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="defaultaddress" EntityType="Self.defaultaddress" />
+    <EntitySet Name="appusers" EntityType="ResidentialModel.appusers" />
+    <AssociationSet Name="FK_appusers_defaultaddress" Association="ResidentialModel.FK_appusers_defaultaddress">
+      <End Role="defaultaddress" EntitySet="defaultaddress" />
+      <End Role="appusers" EntitySet="appusers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="appusers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_address" Type="Int64" />
+    <Property Name="nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="apellido" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="reg_date" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="defaultaddress" Relationship="ResidentialModel.FK_appusers_defaultaddress" FromRole="appusers" ToRole="defaultaddress" />
+  </EntityType>
+  <Association Name="FK_appusers_defaultaddress">
+    <End Type="ResidentialModel.defaultaddress" Role="defaultaddress" Multiplicity="0..1" />
+    <End Type="ResidentialModel.appusers" Role="appusers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="defaultaddress">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="appusers">
+        <PropertyRef Name="id_address" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

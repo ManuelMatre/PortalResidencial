@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GalosModelStoreContainer" CdmEntityContainer="residencial_galosEntities">
+    <EntitySetMapping Name="defaultaddress">
+      <EntityTypeMapping TypeName="GalosModel.defaultaddress">
+        <MappingFragment StoreEntitySet="defaultaddress">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="isavailable" ColumnName="isavailable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

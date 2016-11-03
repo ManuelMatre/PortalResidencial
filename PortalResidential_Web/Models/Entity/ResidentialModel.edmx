@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ResidentialModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="appusers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_address" Type="uint" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contrasena" Type="varchar" MaxLength="50" />
+          <Property Name="reg_date" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="defaultaddress">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="isavailable" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_appusers_defaultaddress">
+          <End Role="defaultaddress" Type="Self.defaultaddress" Multiplicity="0..1" />
+          <End Role="appusers" Type="Self.appusers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="defaultaddress">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="appusers">
+              <PropertyRef Name="id_address" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ResidentialModelStoreContainer">
+          <EntitySet Name="appusers" EntityType="Self.appusers" Schema="residencial_galos" store:Type="Tables" />
+          <EntitySet Name="defaultaddress" EntityType="Self.defaultaddress" Schema="residencial_galos" store:Type="Tables" />
+          <AssociationSet Name="FK_appusers_defaultaddress" Association="Self.FK_appusers_defaultaddress">
+            <End Role="defaultaddress" EntitySet="defaultaddress" />
+            <End Role="appusers" EntitySet="appusers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ResidentialModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="defaultaddress">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="address" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isavailable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="appusers" Relationship="ResidentialModel.FK_appusers_defaultaddress" FromRole="defaultaddress" ToRole="appusers" />
+        </EntityType>
+        <EntityContainer Name="ResidentialEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="defaultaddress" EntityType="Self.defaultaddress" />
+          <EntitySet Name="appusers" EntityType="ResidentialModel.appusers" />
+          <AssociationSet Name="FK_appusers_defaultaddress" Association="ResidentialModel.FK_appusers_defaultaddress">
+            <End Role="defaultaddress" EntitySet="defaultaddress" />
+            <End Role="appusers" EntitySet="appusers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="appusers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_address" Type="Int64" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="reg_date" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="defaultaddress" Relationship="ResidentialModel.FK_appusers_defaultaddress" FromRole="appusers" ToRole="defaultaddress" />
+        </EntityType>
+        <Association Name="FK_appusers_defaultaddress">
+          <End Type="ResidentialModel.defaultaddress" Role="defaultaddress" Multiplicity="0..1" />
+          <End Type="ResidentialModel.appusers" Role="appusers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="defaultaddress">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="appusers">
+              <PropertyRef Name="id_address" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ResidentialModelStoreContainer" CdmEntityContainer="ResidentialEntities">
+          <EntitySetMapping Name="defaultaddress">
+            <EntityTypeMapping TypeName="ResidentialModel.defaultaddress">
+              <MappingFragment StoreEntitySet="defaultaddress">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="isavailable" ColumnName="isavailable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="appusers">
+            <EntityTypeMapping TypeName="ResidentialModel.appusers">
+              <MappingFragment StoreEntitySet="appusers">
+                <ScalarProperty Name="reg_date" ColumnName="reg_date" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_address" ColumnName="id_address" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
